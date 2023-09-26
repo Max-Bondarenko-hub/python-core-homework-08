@@ -2,8 +2,31 @@ from datetime import date, datetime
 
 
 def get_birthdays_per_week(users):
-    # Реалізуйте тут домашнє завдання
-    return users
+    birthdayers = {}
+    today = date.today()
+
+    for u in users:
+        if (today.month < u['birthday'].month):
+            next_birthday = datetime(today.year, u['birthday'].month, u['birthday'].day)
+        elif (today.month == u['birthday'].month) and (today.day <= u['birthday'].day):
+            next_birthday = datetime(today.year, u['birthday'].month, u['birthday'].day)
+        elif (today.month == u['birthday'].month) and (today.day > u['birthday'].day):
+            next_birthday = datetime(today.year + 1, u['birthday'].month, u['birthday'].day)
+        else:
+            next_birthday = datetime(today.year + 1, u['birthday'].month, u['birthday'].day)
+
+        delta = next_birthday.date() - today
+        if delta.days > 7:
+            continue
+        
+        if next_birthday.weekday() == 5 or next_birthday.weekday() == 6:
+            day_week = 'Monday'
+        else:
+            day_week = next_birthday.strftime('%A')
+        if day_week not in birthdayers:
+            birthdayers[day_week] = []
+        birthdayers[day_week].append(u['name'])
+    return birthdayers
 
 
 if __name__ == "__main__":
