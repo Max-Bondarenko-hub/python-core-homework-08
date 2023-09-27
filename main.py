@@ -19,7 +19,7 @@ def get_birthdays_per_week(users):
         if delta.days > 7:
             continue
         
-        if next_birthday.weekday() == 5 or next_birthday.weekday() == 6:
+        if next_birthday.weekday() >= 5:
             day_week = 'Monday'
         else:
             day_week = next_birthday.strftime('%A')
